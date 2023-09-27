@@ -1,0 +1,7 @@
+main.c:55:6:DELAY_TIM_Us	2
+main.c:60:6:DELAY_TIM_Ms	2
+main.c:81:5:main	1
+main.c:127:6:SystemClock_Config	3
+main.c:167:13:MX_TIM4_Init	4
+main.c:212:13:MX_GPIO_Init	1
+main.c:245:6:Error_Handler	1
