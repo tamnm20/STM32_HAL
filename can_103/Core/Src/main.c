@@ -60,23 +60,25 @@ uint8_t RxData[8];
 
 uint32_t TxMailbox;
 
-void cau_hinh_can_1()
-{
+void CanTx_Init(void){
 	//================can tx===================//
-	TxHeader.StdId = 0x069;//dia chi cua can
+	TxHeader.StdId = 0x103;//dia chi cua can
 	TxHeader.RTR = CAN_RTR_DATA;
 	TxHeader.IDE = CAN_ID_STD;
 	TxHeader.DLC = 8;	//so byte truyen di
 	TxHeader.TransmitGlobalTime = DISABLE;
-
+	HAL_CAN_Start(&hcan);
+}
+void CanRx_Init_MASK()
+{
 	//=================can filter==============//
-	/* -- id 0X2B0 ----------------------------------*/
+	/* -------------------------------id 0X103 ----------------------------------*/
 	sFilterConfig.FilterBank = 0;
 	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
 	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-	sFilterConfig.FilterIdHigh = 0x0000;
+	sFilterConfig.FilterIdHigh = 0x104<<5;  // chỉ nhận dữ liệu từ node 0x104
 	sFilterConfig.FilterIdLow = 0;
-	sFilterConfig.FilterMaskIdHigh = 0x0000;
+	sFilterConfig.FilterMaskIdHigh = 0x7ff<<5;
 	sFilterConfig.FilterMaskIdLow = 0;
 	sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
 	sFilterConfig.FilterActivation = ENABLE;
@@ -85,8 +87,8 @@ void cau_hinh_can_1()
 	HAL_CAN_Start(&hcan);
 	//==================kich hoat ngat can=====================//
 	HAL_CAN_ActivateNotification(&hcan,CAN_IT_RX_FIFO0_MSG_PENDING);
-
 }
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -124,21 +126,18 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN_Init();
   /* USER CODE BEGIN 2 */
-  cau_hinh_can_1();
+  CanTx_Init();
+  CanRx_Init();
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  for(uint8_t i = 0;i<8;i++){
-		  TxData[i] += i ;
-	  }
 
-	  HAL_CAN_AddTxMessage(&hcan, &TxHeader, TxData, &TxMailbox); //
-	  HAL_Delay(100);
-	  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  HAL_CAN_AddTxMessage(&hcan, &TxHeader, TxData, &TxMailbox); //
+	  HAL_Delay(2000);
   }
   /* USER CODE END 3 */
 }

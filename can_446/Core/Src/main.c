@@ -61,23 +61,25 @@ uint8_t RxData[8];
 
 uint32_t TxMailbox;
 
-void cau_hinh_can_1()
-{
+void CanTx_Init(void){
 	//================can tx===================//
 	TxHeader.StdId = 0x446;//dia chi cua can
 	TxHeader.RTR = CAN_RTR_DATA;
 	TxHeader.IDE = CAN_ID_STD;
 	TxHeader.DLC = 8;	//so byte truyen di
 	TxHeader.TransmitGlobalTime = DISABLE;
-
+	HAL_CAN_Start(&hcan);
+}
+void CanRx_Init()
+{
 	//=================can filter==============//
-	/* -- id 0X2B0 ----------------------------------*/
+	/* ----------------------------------------id 0X446 ----------------------------------*/
 	sFilterConfig.FilterBank = 0;
 	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
 	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-	sFilterConfig.FilterIdHigh = 0x0000;
+	sFilterConfig.FilterIdHigh = 0x103<<5;   // chỉ nhận dữ liệu từ node 0x103
 	sFilterConfig.FilterIdLow = 0;
-	sFilterConfig.FilterMaskIdHigh = 0x0000;
+	sFilterConfig.FilterMaskIdHigh = 0x7f8<<5;
 	sFilterConfig.FilterMaskIdLow = 0;
 	sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
 	sFilterConfig.FilterActivation = ENABLE;
@@ -86,15 +88,6 @@ void cau_hinh_can_1()
 	HAL_CAN_Start(&hcan);
 	//==================kich hoat ngat can=====================//
 	HAL_CAN_ActivateNotification(&hcan,CAN_IT_RX_FIFO0_MSG_PENDING);
-
-}
-void HAL_CAN_RxFifo0FullCallback(CAN_HandleTypeDef *hcan)
-{
-
-}
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
-{
-
 }
 /* USER CODE END PFP */
 
@@ -133,7 +126,8 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN_Init();
   /* USER CODE BEGIN 2 */
-  cau_hinh_can_1();
+  CanTx_Init();
+  CanRx_Init();
 
   /* USER CODE END 2 */
 
@@ -144,6 +138,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  HAL_CAN_AddTxMessage(&hcan, &TxHeader, TxData, &TxMailbox); //
+	  HAL_Delay(4000);
   }
   /* USER CODE END 3 */
 }

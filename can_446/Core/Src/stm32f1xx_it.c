@@ -245,15 +245,26 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles USB low priority or CAN RX0 interrupts.
   */
+extern CAN_HandleTypeDef hcan;
+extern CAN_RxHeaderTypeDef   RxHeader;
+extern uint8_t               RxData[8];
+extern CAN_TxHeaderTypeDef   TxHeader;
+extern uint8_t               TxData[8];
+extern uint32_t              TxMailbox;
 void USB_LP_CAN1_RX0_IRQHandler(void)
 {
   /* USER CODE BEGIN USB_LP_CAN1_RX0_IRQn 0 */
+	//-----------------------------------446---------------------------------------//
 	HAL_CAN_GetRxMessage(&hcan, CAN_RX_FIFO0, &RxHeader, RxData); // nhận 1 chuỗi
-	//HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_12);
-
+//	if(RxHeader.StdId == 0x103){
+//		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, 1);
+//	}
+//	else if(RxHeader.StdId == 0x104){
+//		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, 0);
+//	}
   /* USER CODE END USB_LP_CAN1_RX0_IRQn 0 */
-  HAL_CAN_IRQHandler(&hcan);
+   HAL_CAN_IRQHandler(&hcan);
   /* USER CODE BEGIN USB_LP_CAN1_RX0_IRQn 1 */
 
   /* USER CODE END USB_LP_CAN1_RX0_IRQn 1 */
