@@ -18,7 +18,7 @@ Trong project này sử dụng 3 module STM32F103C8T6, 3 Module TJA1050 (CAN Tra
 
 Có thể tính các gia trị được đánh dấu bằng các cách:
 
-1. Nhập và tính toán bằng trang web: [CAN Bit Time Calculation](http://www.bittiming.can-wiki.info/)
+### 1. Nhập và tính toán bằng trang web: [CAN Bit Time Calculation](http://www.bittiming.can-wiki.info/)
 
 Chọn program the controller: ST Microelectronics bxCAN
 
@@ -34,9 +34,9 @@ Web sẽ sinh ra 1 bảng các lựa chọn cấu hình trong đó dòng bôi m�
 
 Type: bxCAN, Clock: 36MHz, max brp: 1024, SP: 87.5%, min tq: 8, max tq: 25, FD factor: undefined, SJW: 1   
 
-2. Sử dụng file excel
+### 2. Sử dụng file excel [CAN Bit Timing Calculator.xls](https://github.com/tamnm20/Documents/blob/main/CAN/CAN%20Bit%20Timing%20Calculator.xls)
 
-3. Tính thủ công bằng công thức
+### 3. Tính thủ công bằng công thức
 
 
 ```math
