@@ -8,7 +8,7 @@ Mỗi CAN node là một vi điều khiển (microcontroller – MCU) kết nố
 
 Trong project này sử dụng 3 module STM32F103C8T6, 3 Module TJA1050 (CAN Transceiver), 3 led đơn. Dưới đây là sơ đồ kết nối board STM32F103C8T6 với IC CAN Transceiver. 
 
-![Sơ đồ kết nối 3 Node](So do ket noi.png)
+![Sơ đồ kết nối 3 Node](Sodoketnoi.png)
 
 ## Bước 2: Thiết lập cấu hình trên Cube MX
 
