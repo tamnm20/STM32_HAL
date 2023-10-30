@@ -60,8 +60,8 @@ all: main-build
 main-build: can_103.elf secondary-outputs
 
 # Tool invocations
-can_103.elf can_103.map: $(OBJS) $(USER_OBJS) D:\STM32_Project\can_103\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "can_103.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\STM32_Project\can_103\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="can_103.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+can_103.elf can_103.map: $(OBJS) $(USER_OBJS) C:\Users\TAMRD\Documents\STM32_HAL\CAN\can_103\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "can_103.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\TAMRD\Documents\STM32_HAL\CAN\can_103\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="can_103.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

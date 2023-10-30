@@ -69,7 +69,7 @@ void CanTx_Init(void){
 	TxHeader.TransmitGlobalTime = DISABLE;
 	HAL_CAN_Start(&hcan);
 }
-void CanRx_Init_MASK()
+void CanRx_Init()
 {
 	//=================can filter==============//
 	/* -------------------------------id 0X103 ----------------------------------*/
