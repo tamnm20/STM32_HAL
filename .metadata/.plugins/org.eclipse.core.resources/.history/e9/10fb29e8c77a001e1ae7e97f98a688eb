@@ -1,0 +1,109 @@
+#ifndef UARTRINGBUFFER_H_
+#define UARTRINGBUFFER_H_
+
+#include "stm32f1xx_hal.h"
+
+/* change the size of the buffer */
+#define UART_BUFFER_SIZE 16
+
+typedef struct
+{
+  unsigned char buffer[UART_BUFFER_SIZE];
+  volatile unsigned int head;
+  volatile unsigned int tail;
+  volatile unsigned int readIndex;
+  volatile unsigned int writeIndex;
+} ring_buffer;
+
+
+/* Initialize the ring buffer */
+void Ringbuf_init(void);
+
+/* reads the data in the rx_buffer and increment the tail count in rx_buffer */
+int Uart_read(void);
+//char Uart_read(void)
+/* writes the data to the tx_buffer and increment the head count in tx_buffer */
+//void Uart_write(int c);
+void Uart_write(uint8_t data);
+
+/* function to send the string to the uart */
+void Uart_sendstring(const char *s);
+
+//void Uart_sendApp (const char *s, uint8_t head);
+
+/* Checks if the data is available to read in the rx_buffer */
+int IsDataAvailable(void);
+uint8_t IsFull(void);
+uint8_t IsEmpty(void);
+
+/* the ISR for the uart. put it in the IRQ handler */
+void Uart_isr (UART_HandleTypeDef *huart);
+
+
+///
+//class RingBuffer {
+//public:
+//  RingBuffer(int size);
+//  ~RingBuffer();
+//  void write(char data);
+//  char read();
+//  bool isFull();
+//  bool isEmpty();
+//  int available();
+//
+//private:
+//  int capacity;
+//  char *buffer;
+//  int readIndex;
+//  int writeIndex;
+//};
+
+
+/*
+RingBuffer::RingBuffer(int size) {
+  capacity = size;
+  buffer = new char[size];
+  readIndex = 0;
+  writeIndex = 0;
+}
+
+RingBuffer::~RingBuffer() {
+  delete[] buffer;
+}
+
+void RingBuffer::write(char data) {
+  if (!isFull()) {
+    buffer[writeIndex] = data;
+    writeIndex = (writeIndex + 1) % capacity;
+  }
+}
+
+char RingBuffer::read() {
+  if (!isEmpty()) {
+    char data = buffer[readIndex];
+    readIndex = (readIndex + 1) % capacity;
+    return data;
+  }
+  return '\0'; // Return null character if buffer is empty
+}
+
+bool RingBuffer::isFull() {
+  return ((writeIndex + 1) % capacity) == readIndex;
+}
+
+bool RingBuffer::isEmpty() {
+  return readIndex == writeIndex;
+}
+
+int RingBuffer::available() {
+  if (writeIndex >= readIndex) {
+    return writeIndex - readIndex;
+  } else {
+    return (capacity - readIndex) + writeIndex;
+  }
+}
+///
+ /
+*/
+
+#endif /* UARTRINGBUFFER_H_ */
