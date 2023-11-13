@@ -55,14 +55,14 @@ CAN_TxHeaderTypeDef   TxHeader;
 CAN_RxHeaderTypeDef   RxHeader;
 CAN_FilterTypeDef  		sFilterConfig;
 
-uint8_t TxData[8];
+uint8_t TxData[8]={2,2,1,2,2,0,0,0};
 uint8_t RxData[8];
 
 uint32_t TxMailbox;
 
 void CanTx_Init(void){
 	//================can tx===================//
-	TxHeader.StdId = 0x103;//dia chi cua can
+	TxHeader.StdId = 0x113;//dia chi cua can
 	TxHeader.RTR = CAN_RTR_DATA;
 	TxHeader.IDE = CAN_ID_STD;
 	TxHeader.DLC = 8;	//so byte truyen di
@@ -76,9 +76,9 @@ void CanRx_Init()
 	sFilterConfig.FilterBank = 0;
 	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
 	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-	sFilterConfig.FilterIdHigh = 0x104<<5;  // chỉ nhận dữ liệu từ node 0x104
+	sFilterConfig.FilterIdHigh = 0x00;  // chỉ nhận dữ liệu từ node 0x104
 	sFilterConfig.FilterIdLow = 0;
-	sFilterConfig.FilterMaskIdHigh = 0x7ff<<5;
+	sFilterConfig.FilterMaskIdHigh = 0x0;
 	sFilterConfig.FilterMaskIdLow = 0;
 	sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
 	sFilterConfig.FilterActivation = ENABLE;
@@ -128,6 +128,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   CanTx_Init();
   CanRx_Init();
+  /* USER CODE END 2 */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -137,7 +139,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  HAL_CAN_AddTxMessage(&hcan, &TxHeader, TxData, &TxMailbox); //
-	  HAL_Delay(2000);
+	  HAL_Delay(200);
   }
   /* USER CODE END 3 */
 }
@@ -197,11 +199,11 @@ static void MX_CAN_Init(void)
 
   /* USER CODE END CAN_Init 1 */
   hcan.Instance = CAN1;
-  hcan.Init.Prescaler = 9;
+  hcan.Init.Prescaler = 4;
   hcan.Init.Mode = CAN_MODE_NORMAL;
   hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
-  hcan.Init.TimeSeg1 = CAN_BS1_6TQ;
-  hcan.Init.TimeSeg2 = CAN_BS2_1TQ;
+  hcan.Init.TimeSeg1 = CAN_BS1_15TQ;
+  hcan.Init.TimeSeg2 = CAN_BS2_2TQ;
   hcan.Init.TimeTriggeredMode = DISABLE;
   hcan.Init.AutoBusOff = DISABLE;
   hcan.Init.AutoWakeUp = DISABLE;

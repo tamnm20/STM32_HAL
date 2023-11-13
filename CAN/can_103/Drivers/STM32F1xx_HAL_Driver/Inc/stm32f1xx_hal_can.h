@@ -100,7 +100,6 @@ typedef struct
   */
 typedef struct
 {
-
   uint32_t FilterIdHigh;          /*!< Specifies the filter identification number (MSBs for a 32-bit
                                        configuration, first one for a 16-bit configuration).
                                        This parameter must be a number between
@@ -140,6 +139,7 @@ typedef struct
 
   uint32_t FilterActivation;      /*!< Enable or disable the filter.
                                        This parameter can be a value of @ref CAN_filter_activation */
+
   uint32_t SlaveStartFilterBank;  /*!< Select the start filter bank for the slave CAN instance.
                                        For single CAN instances, this parameter is meaningless.
                                        For dual CAN instances, all filter banks with lower index are assigned to master

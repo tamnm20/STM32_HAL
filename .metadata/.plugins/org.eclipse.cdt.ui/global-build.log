@@ -1,4 +1,53 @@
-15:57:55 **** Incremental Build of configuration Debug for project FPM_EOL ****
+14:51:49 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-gcc "../Core/Src/stm32f1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f1xx_it.d" -MT"Core/Src/stm32f1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f1xx_it.o"
+arm-none-eabi-gcc -o "FPM_EOL.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\TAMRD\Documents\Documents\CAN\FPM_EOL\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FPM_EOL.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: FPM_EOL.elf
+ 
+arm-none-eabi-size   FPM_EOL.elf 
+arm-none-eabi-objdump -h -S  FPM_EOL.elf  > "FPM_EOL.list"
+   text	   data	    bss	    dec	    hex	filename
+  13516	     20	   1908	  15444	   3c54	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+Finished building: FPM_EOL.list
+ 
+14:52:15 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-size   FPM_EOL.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13516	     20	   1908	  15444	   3c54	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+14:56:54 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-size   FPM_EOL.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13516	     20	   1908	  15444	   3c54	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+14:58:19 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-gcc "../Core/Src/UartRingbuffer.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/UartRingbuffer.d" -MT"Core/Src/UartRingbuffer.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/UartRingbuffer.o"
+arm-none-eabi-gcc -o "FPM_EOL.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\TAMRD\Documents\Documents\CAN\FPM_EOL\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FPM_EOL.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: FPM_EOL.elf
+ 
+arm-none-eabi-size   FPM_EOL.elf 
+arm-none-eabi-objdump -h -S  FPM_EOL.elf  > "FPM_EOL.list"
+   text	   data	    bss	    dec	    hex	filename
+  13520	     20	   1908	  15448	   3c58	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+Finished building: FPM_EOL.list
+ 
+15:39:08 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-size   FPM_EOL.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13520	     20	   1908	  15448	   3c58	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+16:08:32 **** Incremental Build of configuration Debug for project FPM_EOL ****
 make -j2 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "FPM_EOL.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\TAMRD\Documents\Documents\CAN\FPM_EOL\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FPM_EOL.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -7,7 +56,98 @@ Finished building target: FPM_EOL.elf
 arm-none-eabi-size   FPM_EOL.elf 
 arm-none-eabi-objdump -h -S  FPM_EOL.elf  > "FPM_EOL.list"
    text	   data	    bss	    dec	    hex	filename
-  15896	    100	   2268	  18264	   4758	FPM_EOL.elf
+  13600	     20	   1908	  15528	   3ca8	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+Finished building: FPM_EOL.list
+ 
+16:18:05 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-size   FPM_EOL.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13600	     20	   1908	  15528	   3ca8	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+16:19:43 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-size   FPM_EOL.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13600	     20	   1908	  15528	   3ca8	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+16:34:52 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-size   FPM_EOL.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13600	     20	   1908	  15528	   3ca8	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+16:47:12 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "FPM_EOL.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\TAMRD\Documents\Documents\CAN\FPM_EOL\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FPM_EOL.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: FPM_EOL.elf
+ 
+arm-none-eabi-size   FPM_EOL.elf 
+arm-none-eabi-objdump -h -S  FPM_EOL.elf  > "FPM_EOL.list"
+   text	   data	    bss	    dec	    hex	filename
+  13520	     20	   1908	  15448	   3c58	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+Finished building: FPM_EOL.list
+ 
+09:44:19 **** Incremental Build of configuration Debug for project can_103 ****
+make -j2 all 
+arm-none-eabi-size   can_103.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8476	     28	   1716	  10220	   27ec	can_103.elf
+Finished building: default.size.stdout
+ 
+09:45:41 **** Incremental Build of configuration Debug for project can_103 ****
+make -j2 all 
+arm-none-eabi-size   can_103.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8476	     28	   1716	  10220	   27ec	can_103.elf
+Finished building: default.size.stdout
+ 
+09:47:18 **** Incremental Build of configuration Debug for project can_103 ****
+make -j2 all 
+arm-none-eabi-size   can_103.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8476	     28	   1716	  10220	   27ec	can_103.elf
+Finished building: default.size.stdout
+ 
+16:07:14 **** Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-size   FPM_EOL.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13520	     20	   1908	  15448	   3c58	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+15:27:58 **** Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "FPM_EOL.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\TAMRD\Documents\Documents\CAN\FPM_EOL\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FPM_EOL.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: FPM_EOL.elf
+ 
+arm-none-eabi-size   FPM_EOL.elf 
+arm-none-eabi-objdump -h -S  FPM_EOL.elf  > "FPM_EOL.list"
+   text	   data	    bss	    dec	    hex	filename
+  13520	     20	   1908	  15448	   3c58	FPM_EOL.elf
+Finished building: default.size.stdout
+ 
+Finished building: FPM_EOL.list
+ 
+15:53:58 **** Incremental Build of configuration Debug for project FPM_EOL ****
+make -j2 all 
+arm-none-eabi-gcc "../Core/Src/stm32f1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f1xx_it.d" -MT"Core/Src/stm32f1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f1xx_it.o"
+arm-none-eabi-gcc -o "FPM_EOL.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\TAMRD\Documents\Documents\CAN\FPM_EOL\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FPM_EOL.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: FPM_EOL.elf
+ 
+arm-none-eabi-size   FPM_EOL.elf 
+arm-none-eabi-objdump -h -S  FPM_EOL.elf  > "FPM_EOL.list"
+   text	   data	    bss	    dec	    hex	filename
+  13504	     20	   1908	  15432	   3c48	FPM_EOL.elf
 Finished building: default.size.stdout
  
 Finished building: FPM_EOL.list

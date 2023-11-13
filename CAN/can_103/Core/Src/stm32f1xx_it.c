@@ -51,7 +51,9 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern uint8_t TxData[8];
+extern uint8_t RxData[8];
+extern CAN_RxHeaderTypeDef   RxHeader;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -201,12 +203,6 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles USB low priority or CAN RX0 interrupts.
   */
-extern CAN_HandleTypeDef hcan;
-extern CAN_RxHeaderTypeDef   RxHeader;
-extern uint8_t               RxData[8];
-extern CAN_TxHeaderTypeDef   TxHeader;
-extern uint8_t               TxData[8];
-extern uint32_t              TxMailbox;
 void USB_LP_CAN1_RX0_IRQHandler(void)
 {
   /* USER CODE BEGIN USB_LP_CAN1_RX0_IRQn 0 */

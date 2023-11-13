@@ -1,5 +1,7 @@
-_tx_buffer
-_rx_buffer
-t
+_tam_buffer
+rx_App
 TxHeader.StdId
-rx_data
+TxData
+RxHeader.StdId
+RxData
+tx_App
