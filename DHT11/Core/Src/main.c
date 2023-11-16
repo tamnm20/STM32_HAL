@@ -48,7 +48,7 @@ UART_HandleTypeDef huart1;
 uint8_t buffer[30];
 
 uint8_t Rh_byte1, Rh_byte2, Temp_byte1, Temp_byte2;
-uint16_t SUM, RH, TEMP;
+uint16_t SUM;
 
 float Temperature = 0;
 float Humidity = 0;
@@ -119,22 +119,23 @@ void DHT11_Start (void)
 {
 	Set_Pin_Output();// set the pin as output
 	HAL_GPIO_WritePin (DHT11_GPIO_Port, DHT11_Pin, 0);   // pull the pin low
-	DELAY_TIM_Us (18000);   // wait for 18ms
+	DELAY_TIM_Ms (18);   // wait for 18ms
 	Set_Pin_Input();    // set as input
 }
-uint8_t test = 0;
+int dem=0;
 uint8_t Check_Response (void)
 {
+	Set_Pin_Input();   // set as input
 	uint8_t Response = 0;
-	DELAY_TIM_Us (80);
-	test = HAL_GPIO_ReadPin (DHT11_GPIO_Port, DHT11_Pin);
+	DELAY_TIM_Us (40);
 	if (!(HAL_GPIO_ReadPin (DHT11_GPIO_Port, DHT11_Pin)))
 	{
+		  dem++;
 		DELAY_TIM_Us (80);
 		if ((HAL_GPIO_ReadPin (DHT11_GPIO_Port, DHT11_Pin))) Response = 1;
 		else Response = -1;
 	}
-	while ((HAL_GPIO_ReadPin (DHT11_GPIO_Port, DHT11_Pin)));   // wait for the pin to go low
+	while ((HAL_GPIO_ReadPin (DHT11_GPIO_Port, DHT11_Pin))); // wait for the pin to go low
 
 	return Response;
 }
@@ -157,6 +158,7 @@ uint8_t DHT11_Read (void)
 }
 
 void DHT11_ReadTempHumi (void){
+
 	  DHT11_Start();
 	  Presence = Check_Response();
 	  if(Presence){
@@ -166,10 +168,8 @@ void DHT11_ReadTempHumi (void){
 		  Temp_byte2 = DHT11_Read ();
 		  SUM = DHT11_Read();
 		  if(SUM == ((Rh_byte1 + Rh_byte2 + Temp_byte1 + Temp_byte2) & 0xFF)){
-			  TEMP = ((Temp_byte1<<8)|Temp_byte2);
-			  RH = ((Rh_byte1<<8)|Rh_byte2);
-			  Temperature = (float) (TEMP/10.0);
-			  Humidity = (float) (RH/10.0);
+			  Temperature = Temp_byte1 + (float)Temp_byte2 *0.1;
+			  Humidity = Rh_byte1 + (float)Rh_byte2 *0.1;
 		  }
 		  else{
 			  Uart_Send_String("ERROR_CHECKSUM\n");
