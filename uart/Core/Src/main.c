@@ -45,7 +45,7 @@ TIM_HandleTypeDef htim2;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-uint8_t buffer[100];
+uint8_t buffer[50];
 uint8_t count = 0;
 uint8_t rx_data[100];
 /* USER CODE END PV */
