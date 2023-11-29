@@ -6,6 +6,100 @@ Edit by modify: Ngoc Hang
 extern I2C_HandleTypeDef hi2c1;  // change your handler here accordingly
 
 #define SLAVE_ADDRESS_LCD 0x4E // change this according to user setup
+
+// make some custom characters:
+uint8_t heart[8] = {
+  0b00000,
+  0b01010,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b01110,
+  0b00100,
+  0b00000
+};
+
+uint8_t smiley[8] = {
+  0b00000,
+  0b00000,
+  0b01010,
+  0b00000,
+  0b00000,
+  0b10001,
+  0b01110,
+  0b00000
+};
+
+uint8_t frownie[8] = {
+  0b00000,
+  0b00000,
+  0b01010,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b01110,
+  0b10001
+};
+
+uint8_t armsDown[8] = {
+  0b00100,
+  0b01010,
+  0b00100,
+  0b00100,
+  0b01110,
+  0b10101,
+  0b00100,
+  0b01010
+};
+
+uint8_t armsUp[8] = {
+  0b00100,
+  0b01010,
+  0b00100,
+  0b10101,
+  0b01110,
+  0b00100,
+  0b00100,
+  0b01010
+};
+
+
+uint8_t Tuan[8] = {
+  0b00011,
+  0b00100,
+  0b01010,
+  0b01110,
+  0b00001,
+  0b01111,
+  0b10001,
+  0b01111
+};
+
+#if 0
+uint8_t armsUp[8] = {
+  0b00100,
+  0b01010,
+  0b00100,
+  0b10101,
+  0b01110,
+  0b00100,
+  0b00100,
+  0b01010
+};
+
+uint8_t armsUp[8] = {
+  0b00100,
+  0b01010,
+  0b00100,
+  0b10101,
+  0b01110,
+  0b00100,
+  0b00100,
+  0b01010
+};
+
+#endif
+
 void lcd_send_cmd (char cmd)
 {
   char data_u, data_l;
@@ -63,13 +157,28 @@ void lcd_clear_display (void)
 void lcd_goto_XY (int row, int col)
 {
 	uint8_t pos_Addr;
-	if(row == 1) 
-	{
-		pos_Addr = 0x80 + row - 1 + col;
-	}
-	else
-	{
-		pos_Addr = 0x80 | (0x40 + col);
+	switch(row){
+		case 2:
+			pos_Addr = 0x80 | (0x40 + col);
+			break;
+		case 3:
+			pos_Addr = 0x80 | (0x14 + col);
+			break;
+		case 4:
+			pos_Addr = 0x80 | (0x54 + col);
+			break;
+		default:
+			pos_Addr = 0x80 + row - 1 + col;
+			break;
 	}
 	lcd_send_cmd(pos_Addr);
+}
+
+
+void lcd_createChar(uint8_t location, uint8_t charmap[]) {
+  location &= 0x7; // we only have 8 locations 0-7
+  lcd_send_cmd(LCD_SETCGRAMADDR | (location << 3));
+  for (int i=0; i<8; i++) {
+	  lcd_send_data(charmap[i]);
+  }
 }

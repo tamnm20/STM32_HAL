@@ -21,7 +21,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "UartRingbuffer.h"
 #include "i2c-lcd.h"
 /* USER CODE END Includes */
 
@@ -43,8 +42,6 @@
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
 
-UART_HandleTypeDef huart1;
-
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -53,9 +50,7 @@ UART_HandleTypeDef huart1;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
-static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -70,7 +65,6 @@ static void MX_USART1_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	int i=0,j=1;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -92,18 +86,47 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
-  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  Ringbuf_init ();
   HAL_Delay(1000);
   lcd_init();
-  lcd_goto_XY(1, 4);
-  lcd_send_string("Cui Tuan");
+  lcd_goto_XY(1, 0);
+  lcd_send_string("Toi Tuan Cui xin the");
   HAL_Delay(50);
-  lcd_goto_XY(2, 4);
-  lcd_send_string("Tuan cui");
-  HAL_Delay(2000);
+  lcd_goto_XY(2, 0);
+  lcd_send_string("   Trung voi Dang   ");
+  HAL_Delay(50);
+  lcd_goto_XY(3, 0);
+  lcd_send_string("    Hieu voi Dan    ");
+  HAL_Delay(50);
+  lcd_goto_XY(4, 0);
+  lcd_send_string("  San sang di NVQS  ");
+  HAL_Delay(200);
   lcd_clear_display();
+
+  lcd_createChar(0, armsDown);
+  // create a new character
+  lcd_createChar(1, smiley);
+  // create a new character
+  lcd_createChar(2, frownie);
+  // create a new character
+  lcd_createChar(3, heart);
+  // create a new character
+  lcd_createChar(4, armsUp);
+  lcd_createChar(5, Tuan);
+
+  // set the cursor to the top left
+  lcd_goto_XY(1, 0);
+
+  // Print a message to the lcd.
+  lcd_send_string("I ");
+  lcd_send_data('a');
+  lcd_send_string(" Arduino! ");
+  lcd_send_data(0x01);
+
+  lcd_goto_XY(2, 4);
+  lcd_send_string("Tu");
+  lcd_send_data(0x05);
+  lcd_send_string("n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -111,20 +134,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
-	if (IsDataAvailable())
-	{
-		int data = Uart_read();
-		Uart_write(data);
-		lcd_goto_XY(j, i);
-		lcd_send_data(data);
-		i++;
-		if(i==15){
-			i=0;
-			if(j<2) j=2;
-			else j=2;
-		}
-	}
 	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 	HAL_Delay(200);
   }
@@ -200,39 +211,6 @@ static void MX_I2C1_Init(void)
   /* USER CODE BEGIN I2C1_Init 2 */
 
   /* USER CODE END I2C1_Init 2 */
-
-}
-
-/**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART1_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART1_Init 0 */
-
-  /* USER CODE END USART1_Init 0 */
-
-  /* USER CODE BEGIN USART1_Init 1 */
-
-  /* USER CODE END USART1_Init 1 */
-  huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
-  huart1.Init.WordLength = UART_WORDLENGTH_8B;
-  huart1.Init.StopBits = UART_STOPBITS_1;
-  huart1.Init.Parity = UART_PARITY_NONE;
-  huart1.Init.Mode = UART_MODE_TX_RX;
-  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART1_Init 2 */
-
-  /* USER CODE END USART1_Init 2 */
 
 }
 
