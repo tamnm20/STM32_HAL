@@ -1,7 +1,9 @@
-Presence
-dem
-Temp_byte1
-Temp_byte2
-TEMP
-Temperature
-Humidity
+_tam_buffer->buffer
+rx_App
+TxHeader.StdId
+TxData
+huart1
+siZe
+tam_buffer
+count
+send_can
