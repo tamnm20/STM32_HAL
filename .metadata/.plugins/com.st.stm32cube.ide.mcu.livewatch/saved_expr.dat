@@ -1,9 +1,1 @@
-_tam_buffer->buffer
-rx_App
-TxHeader.StdId
-TxData
-huart1
-siZe
-tam_buffer
-count
-send_can
+hi2c1

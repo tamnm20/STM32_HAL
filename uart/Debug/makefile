@@ -52,6 +52,12 @@ default.size.stdout \
 OBJDUMP_LIST += \
 uart.list \
 
+OBJCOPY_HEX += \
+uart.hex \
+
+OBJCOPY_BIN += \
+uart.bin \
+
 
 # All Target
 all: main-build
@@ -75,12 +81,22 @@ uart.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+uart.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "uart.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+uart.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "uart.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) default.size.stdout uart.elf uart.list uart.map
+	-$(RM) default.size.stdout uart.bin uart.elf uart.hex uart.list uart.map
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

@@ -1,23 +1,10 @@
-14:28:46 **** Incremental Build of configuration Debug for project LCD_I2C ****
+16:35:30 **** Incremental Build of configuration Debug for project LCD_I2C ****
 make -j2 all 
-arm-none-eabi-gcc "../Core/Src/i2c-lcd.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/i2c-lcd.d" -MT"Core/Src/i2c-lcd.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/i2c-lcd.o"
-arm-none-eabi-gcc -o "LCD_I2C.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\TAMRD\Documents\STM32_HAL\LCD_I2C\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LCD_I2C.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: LCD_I2C.elf
- 
 arm-none-eabi-size   LCD_I2C.elf 
-arm-none-eabi-objdump -h -S  LCD_I2C.elf  > "LCD_I2C.list"
    text	   data	    bss	    dec	    hex	filename
-   8240	     68	   1652	   9960	   26e8	LCD_I2C.elf
+  15016	     20	   1652	  16688	   4130	LCD_I2C.elf
 Finished building: default.size.stdout
  
-arm-none-eabi-objcopy  -O ihex  LCD_I2C.elf  "LCD_I2C.hex"
-Finished building: LCD_I2C.list
- 
-arm-none-eabi-objcopy  -O binary  LCD_I2C.elf  "LCD_I2C.bin"
-Finished building: LCD_I2C.hex
-Finished building: LCD_I2C.bin
- 
- 
 
-14:28:47 Build Finished. 0 errors, 0 warnings. (took 1s.216ms)
+16:35:32 Build Finished. 0 errors, 0 warnings. (took 1s.253ms)
 

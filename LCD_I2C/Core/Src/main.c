@@ -51,6 +51,13 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
+//void HAL_I2C_RxCpltCallback(I2C_HandleTypeDef *hi2c)
+//{
+//  // Xử lý sự kiện khi hoàn thành việc nhận dữ liệu
+//	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+//
+//}
+uint8_t test[4]={'1', '2', '3', '4'};
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -87,6 +94,7 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+  //HAL_I2C_EnableListen_IT(&hi2c1);
   HAL_Delay(1000);
   lcd_init();
   lcd_goto_XY(1, 0);
@@ -102,31 +110,32 @@ int main(void)
   lcd_send_string("  San sang di NVQS  ");
   HAL_Delay(200);
   lcd_clear_display();
-
-  lcd_createChar(0, armsDown);
-  // create a new character
-  lcd_createChar(1, smiley);
-  // create a new character
-  lcd_createChar(2, frownie);
-  // create a new character
-  lcd_createChar(3, heart);
-  // create a new character
-  lcd_createChar(4, armsUp);
-  lcd_createChar(5, Tuan);
-
-  // set the cursor to the top left
   lcd_goto_XY(1, 0);
 
-  // Print a message to the lcd.
-  lcd_send_string("I ");
-  lcd_send_data('a');
-  lcd_send_string(" Arduino! ");
-  lcd_send_data(0x01);
+//  lcd_createChar(0, armsDown);
+//  // create a new character
+//  lcd_createChar(1, smiley);
+//  // create a new character
+//  lcd_createChar(2, frownie);
+//  // create a new character
+//  lcd_createChar(3, heart);
+//  // create a new character
+//  lcd_createChar(4, armsUp);
+//  lcd_createChar(5, Tuan);
 
-  lcd_goto_XY(2, 4);
-  lcd_send_string("Tu");
-  lcd_send_data(0x05);
-  lcd_send_string("n");
+  // set the cursor to the top left
+  //lcd_goto_XY(1, 0);
+
+  // Print a message to the lcd.
+//  lcd_send_string("I ");
+//  lcd_send_data('a');
+//  lcd_send_string(" Arduino! ");
+//  lcd_send_data(0x01);
+//
+//  lcd_goto_XY(2, 4);
+//  lcd_send_string("Tu");
+//  lcd_send_data(0x05);
+//  lcd_send_string("n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -136,8 +145,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	lcd_goto_XY(1, 0);
+	lcd_send_string("123456789");
+	//HAL_I2C_Master_Transmit (&hi2c1, 0x40,(uint8_t *) test, 4, 100);
 	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-	HAL_Delay(200);
+	HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
@@ -198,7 +210,7 @@ static void MX_I2C1_Init(void)
   hi2c1.Instance = I2C1;
   hi2c1.Init.ClockSpeed = 100000;
   hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
-  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.OwnAddress1 = 66;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
   hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
   hi2c1.Init.OwnAddress2 = 0;
@@ -209,7 +221,7 @@ static void MX_I2C1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN I2C1_Init 2 */
-
+  //HAL_I2C_EnableListen_IT(&hi2c1);
   /* USER CODE END I2C1_Init 2 */
 
 }

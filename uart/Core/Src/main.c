@@ -45,7 +45,7 @@ TIM_HandleTypeDef htim2;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-uint8_t buffer[50];
+uint8_t buffer[50]="Hello world\n";
 uint8_t count = 0;
 uint8_t rx_data[100];
 /* USER CODE END PV */
@@ -63,14 +63,10 @@ static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN 0 */
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-	if(huart->Instance == USART1){
-		count++;
-		HAL_UART_Receive_IT(&huart1, &rx_data[count], 1);
-
-
-//	 if(buffer[0]=='1') HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, 0);
-//	 if(buffer[0]=='0') HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, 1);
-	}
+//	if(huart->Instance == USART1){
+//		count++;
+//		HAL_UART_Receive_IT(&huart1, &rx_data[count], 1);
+//	}
 }
 
 /* USER CODE END 0 */
@@ -107,11 +103,11 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
-  float t = 27.055;
-  sprintf((char*)buffer,"STM32 hello from print\r\n");
-  sprintf((char*)buffer+strlen((char*)buffer),"%0.2f",t);
-  //strcat((char*)buffer,"STM32 hello from print\r\n");
-  HAL_UART_Transmit(&huart1,buffer,strlen((char*)buffer) , 100);
+//  float t = 27.055;
+//  sprintf((char*)buffer,"STM32 hello from print\r\n");
+//  sprintf((char*)buffer+strlen((char*)buffer),"%0.2f",t);
+//  //strcat((char*)buffer,"STM32 hello from print\r\n");
+//  HAL_UART_Transmit(&huart1,buffer,strlen((char*)buffer) , 100);
 
   HAL_UART_Receive_IT(&huart1, &rx_data[count], 1);
   /* USER CODE END 2 */
@@ -126,13 +122,15 @@ int main(void)
     /* USER CODE BEGIN 3 */
 //	  uint8_t tmp = strlen((char*)rx_data);
 //	  if(rx_data[tmp - 1] == '\n') {
-//		  //HAL_UART_Transmit(&huart1, rx_data, tmp, 1000);
+//		  HAL_UART_Transmit(&huart1, rx_data, tmp, 1000);
 //		  count = 0;
 //		  memset(rx_data, 0, sizeof(rx_data));
 //		  huart1.pRxBuffPtr = &rx_data[0];
-//  //		  huart1.RxState = HAL_UART_STATE_READY;
-//  //		  HAL_UART_Receive_IT(&huart1, &rx_data[count], 1);
+//  		  huart1.RxState = HAL_UART_STATE_READY;
+//  		  HAL_UART_Receive_IT(&huart1, &rx_data[count], 1);
 //	  }
+	  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_12);
+	  HAL_Delay(200);
   }
   /* USER CODE END 3 */
 }
@@ -237,7 +235,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -290,7 +288,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
  if(htim->Instance == htim2.Instance)
  {
-	  //HAL_UART_Transmit(&huart1,buffer,strlen((char*)buffer) , 100);
+	 //HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_12);
+	 HAL_UART_Transmit(&huart1,buffer,strlen((char*)buffer) , 100);
  }
 }
 
