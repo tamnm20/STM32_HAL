@@ -1,0 +1,15 @@
+/*
+ * stm32f1.h
+ *
+ *  Created on: Jan 22, 2024
+ *      Author: TAMRD
+ */
+
+#ifndef INC_STM32F1_H_
+#define INC_STM32F1_H_
+
+#define FLASH_BASEADDR  0x08000000U
+#define SRAM_BASEADDR   0x20000000U
+#define ROM_BASEADDR	0x1FFFF000U
+
+#endif /* INC_STM32F1_H_ */

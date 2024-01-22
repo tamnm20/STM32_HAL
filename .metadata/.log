@@ -7411,3 +7411,27 @@ org.eclipse.core.runtime.CoreException: attempt to set description for a project
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-01-03 10:22:29.101
 !MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-01-22 09:30:49.334 -----------------------------------------------
+eclipse.buildId=Version 1.13.2
+java.version=17.0.6
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-01-22 09:31:27.666
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-01-22 09:31:27.699
+!MESSAGE Log4j2 initialized with config file C:\Users\TAMRD\Documents\STM32_HAL\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-01-22 09:31:46.669
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-01-22 09:34:34.945
+!MESSAGE Indexed 'GPIO_driver' (3 sources, 53 headers) in 3.86 sec: 1,950 declarations; 2,831 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.042%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-01-22 09:40:52.037
+!MESSAGE Indexed 'GPIO_driver' (3 sources, 54 headers) in 0.5 sec: 1,950 declarations; 2,829 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.042%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-01-22 09:50:21.892
+!MESSAGE Indexed 'GPIO_driver' (3 sources, 54 headers) in 0.428 sec: 1,950 declarations; 2,830 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.042%)
