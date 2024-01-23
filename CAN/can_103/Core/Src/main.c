@@ -55,14 +55,15 @@ CAN_TxHeaderTypeDef   TxHeader;
 CAN_RxHeaderTypeDef   RxHeader;
 CAN_FilterTypeDef  		sFilterConfig;
 
-uint8_t TxData[8]={2,2,1,2,2,0,0,0};
+//uint8_t TxData[8]={2,2,1,2,2,0,0,0};
+uint8_t TxData[8]={0xFF, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00};
 uint8_t RxData[8];
 
 uint32_t TxMailbox;
 
 void CanTx_Init(void){
 	//================can tx===================//
-	TxHeader.StdId = 0x113;//dia chi cua can
+	TxHeader.StdId = 0x7A2;//dia chi cua can
 	TxHeader.RTR = CAN_RTR_DATA;
 	TxHeader.IDE = CAN_ID_STD;
 	TxHeader.DLC = 8;	//so byte truyen di
@@ -138,6 +139,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 	  HAL_CAN_AddTxMessage(&hcan, &TxHeader, TxData, &TxMailbox); //
 	  HAL_Delay(200);
   }

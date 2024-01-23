@@ -1,0 +1,100 @@
+/*
+ * stm32_gpio.h
+ *
+ *  Created on: Jan 22, 2024
+ *      Author: TAMRD
+ */
+
+#ifndef INC_STM32_GPIO_H_
+#define INC_STM32_GPIO_H_
+
+#include "stm32f1.h"
+
+typedef struct
+{
+	uint8_t GPIO_PinNumber;
+	uint8_t GPIO_PinMode;
+	uint8_t GPIO_PinSpeed;
+	uint8_t GPIO_PinPuPdControl;
+	uint8_t GPIO_PinOPType;
+	uint8_t GPIO_PinAltFunMode;
+
+}GPIO_PinConfig_t;
+
+typedef struct
+{
+	GPIO_RegDef_t *pGPIOx;
+	GPIO_PinConfig_t GPIO_pinConfig;
+}GPIO_Handle_t;
+
+#define GPIO_PIN_0                 0 				   /* Pin 0 selected    */
+#define GPIO_PIN_1                 1 				   /* Pin 1 selected    */
+#define GPIO_PIN_2                 2 			   	   /* Pin 2 selected    */
+#define GPIO_PIN_3                 3 				   /* Pin 3 selected    */
+#define GPIO_PIN_4                 4 				   /* Pin 4 selected    */
+#define GPIO_PIN_5                 5 				   /* Pin 5 selected    */
+#define GPIO_PIN_6                 6 				   /* Pin 6 selected    */
+#define GPIO_PIN_7                 7 				   /* Pin 7 selected    */
+#define GPIO_PIN_8                 8 				   /* Pin 8 selected    */
+#define GPIO_PIN_9                 9 				   /* Pin 9 selected    */
+#define GPIO_PIN_10                10				   /* Pin 10 selected   */
+#define GPIO_PIN_11                11				   /* Pin 11 selected   */
+#define GPIO_PIN_12                12				   /* Pin 12 selected   */
+#define GPIO_PIN_13                13				   /* Pin 13 selected   */
+#define GPIO_PIN_14                14				   /* Pin 14 selected   */
+#define GPIO_PIN_15                15				   /* Pin 15 selected   */
+#define GPIO_PIN_All               ((uint16_t)0xFFFF)  /* All pins selected */
+
+/** @defgroup GPIO_mode_define GPIO mode define
+  * @brief GPIO Configuration Mode
+  *        Elements values convention: 0xX0yz00YZ
+  *           - X  : GPIO mode or EXTI Mode
+  *           - y  : External IT or Event trigger detection
+  *           - z  : IO configuration on External IT or Event
+  *           - Y  : Output type (Push Pull or Open Drain)
+  *           - Z  : IO Direction mode (Input, Output, Alternate or Analog)
+  * @{
+  */
+#define  GPIO_MODE_INPUT                        0x00000000u   /*!< Input Floating Mode                   */
+#define  GPIO_MODE_OUTPUT_PP                    0x00000001u   /*!< Output Push Pull Mode                 */
+#define  GPIO_MODE_OUTPUT_OD                    0x00000011u   /*!< Output Open Drain Mode                */
+#define  GPIO_MODE_AF_PP                        0x00000002u   /*!< Alternate Function Push Pull Mode     */
+#define  GPIO_MODE_AF_OD                        0x00000012u   /*!< Alternate Function Open Drain Mode    */
+#define  GPIO_MODE_AF_INPUT                     GPIO_MODE_INPUT          /*!< Alternate Function Input Mode         */
+
+#define  GPIO_MODE_ANALOG                       0x00000003u   /*!< Analog Mode  */
+
+#define  GPIO_MODE_IT_RISING                    0x10110000u   /*!< External Interrupt Mode with Rising edge trigger detection          */
+#define  GPIO_MODE_IT_FALLING                   0x10210000u   /*!< External Interrupt Mode with Falling edge trigger detection         */
+#define  GPIO_MODE_IT_RISING_FALLING            0x10310000u   /*!< External Interrupt Mode with Rising/Falling edge trigger detection  */
+
+#define  GPIO_MODE_EVT_RISING                   0x10120000u   /*!< External Event Mode with Rising edge trigger detection               */
+#define  GPIO_MODE_EVT_FALLING                  0x10220000u   /*!< External Event Mode with Falling edge trigger detection              */
+#define  GPIO_MODE_EVT_RISING_FALLING           0x10320000u   /*!< External Event Mode with Rising/Falling edge trigger detection       */
+/** @defgroup GPIO_speed_define  GPIO speed define
+  * @brief GPIO Output Maximum frequency
+  * @{
+  */
+#define  GPIO_SPEED_FREQ_LOW              (GPIO_CRL_MODE0_1) /*!< Low speed */
+#define  GPIO_SPEED_FREQ_MEDIUM           (GPIO_CRL_MODE0_0) /*!< Medium speed */
+#define  GPIO_SPEED_FREQ_HIGH             (GPIO_CRL_MODE0)   /*!< High speed */
+
+void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi);
+void GPIO_Init(GPIO_Handle_t *pGPIOHandle);
+void GPIO_DeInit(GPIO_RegDef_t *pGPIOx);
+uint8_t GPIO_ReadPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
+uint16_t GPIO_ReadPort(GPIO_RegDef_t *pGPIOx);
+void GPIO_WritePin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t Value);
+void GPIO_WritePort(GPIO_RegDef_t *pGPIOx, uint16_t Value);
+void GPIO_TogglePin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
+
+void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi);
+void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriority);
+void GPIO_IRQHandling(uint8_t PinNumber);
+
+
+
+
+
+
+#endif /* INC_STM32_GPIO_H_ */

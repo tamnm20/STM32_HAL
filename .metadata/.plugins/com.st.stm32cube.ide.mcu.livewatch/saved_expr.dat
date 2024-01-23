@@ -1,1 +1,7 @@
 hi2c1
+TxHeader
+TxMailbox
+TxData
+RxData
+RxHeader.StdId
+TxHeader.StdId

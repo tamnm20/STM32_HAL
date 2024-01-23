@@ -1,21 +1,20 @@
-14:05:40 **** Incremental Build of configuration Debug for project GPIO_driver ****
+16:54:17 **** Incremental Build of configuration Debug for project GPIO_driver ****
 make -j2 all 
 arm-none-eabi-gcc "../Tam_drivers/Src/stm32_gpio.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F1 -DSTM32F103C8Tx -c -I"C:/Users/TAMRD/Documents/STM32_HAL/GPIO_driver/Tam_drivers/Inc" -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Tam_drivers/Src/stm32_gpio.d" -MT"Tam_drivers/Src/stm32_gpio.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Tam_drivers/Src/stm32_gpio.o"
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F1 -DSTM32F103C8Tx -c -I"C:/Users/TAMRD/Documents/STM32_HAL/GPIO_driver/Tam_drivers/Inc" -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
 arm-none-eabi-gcc -o "GPIO_driver.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\TAMRD\Documents\STM32_HAL\GPIO_driver\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="GPIO_driver.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: GPIO_driver.elf
  
 arm-none-eabi-size   GPIO_driver.elf 
 arm-none-eabi-objdump -h -S  GPIO_driver.elf  > "GPIO_driver.list"
    text	   data	    bss	    dec	    hex	filename
-    556	      8	   1568	   2132	    854	GPIO_driver.elf
+   1144	      8	   1568	   2720	    aa0	GPIO_driver.elf
 Finished building: default.size.stdout
- 
 Finished building: GPIO_driver.list
-arm-none-eabi-objcopy  -O ihex  GPIO_driver.elf  "GPIO_driver.hex"
  
+ 
+arm-none-eabi-objcopy  -O ihex  GPIO_driver.elf  "GPIO_driver.hex"
 Finished building: GPIO_driver.hex
  
 
-14:05:41 Build Finished. 0 errors, 0 warnings. (took 797ms)
+16:54:18 Build Finished. 0 errors, 0 warnings. (took 921ms)
 

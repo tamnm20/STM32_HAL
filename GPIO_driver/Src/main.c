@@ -18,9 +18,26 @@
 
 #include <stdint.h>
 #include <stm32f1.h>
+#include <stm32_gpio.h>
+
+void delay(void){
+	for(uint32_t i=0; i< 500000;i++);
+}
 
 int main(void)
 {
+	GPIO_Handle_t GpioLedC13;
+	GpioLedC13.pGPIOx = GPIOC;
+	GpioLedC13.GPIO_pinConfig.GPIO_PinNumber = GPIO_PIN_13;
+	GpioLedC13.GPIO_pinConfig.GPIO_PinMode = GPIO_MODE_OUTPUT_PP;
+	GpioLedC13.GPIO_pinConfig.GPIO_PinType = GPIO_MODE_OUT_50M;
+	GpioLedC13.GPIO_pinConfig.GPIO_Pull = GPIO_PULLUP;
     /* Loop forever */
-	for(;;);
+
+	GPIO_Init(&GpioLedC13);
+	while(1){
+		GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+		delay();
+	}
+	return 0;
 }

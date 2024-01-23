@@ -14,11 +14,8 @@ typedef struct
 {
 	uint8_t GPIO_PinNumber;
 	uint8_t GPIO_PinMode;
-	uint8_t GPIO_PinSpeed;
-	uint8_t GPIO_PinPuPdControl;
-	uint8_t GPIO_PinOPType;
-	uint8_t GPIO_PinAltFunMode;
-
+	uint8_t GPIO_PinType;
+	uint8_t GPIO_Pull;
 }GPIO_PinConfig_t;
 
 typedef struct
@@ -45,39 +42,53 @@ typedef struct
 #define GPIO_PIN_15                15				   /* Pin 15 selected   */
 #define GPIO_PIN_All               ((uint16_t)0xFFFF)  /* All pins selected */
 
-/** @defgroup GPIO_mode_define GPIO mode define
-  * @brief GPIO Configuration Mode
-  *        Elements values convention: 0xX0yz00YZ
-  *           - X  : GPIO mode or EXTI Mode
-  *           - y  : External IT or Event trigger detection
-  *           - z  : IO configuration on External IT or Event
-  *           - Y  : Output type (Push Pull or Open Drain)
-  *           - Z  : IO Direction mode (Input, Output, Alternate or Analog)
+//Mode, speed
+//#define GPIO_MODE_IN 		0
+//#define GPIO_MODE_OUT 	1
+//#define GPIO_MODE_ALTFN 	2
+//#define GPIO_MODE_ANALOG	3
+//#define GPIO_MODE_II_FT 	4 //FALLING
+//#define GPIO_MODE_IT_RT 	5 //RISING
+//#define GPIO_MODE_IT_RFT 	6 //BOTH
+
+#define GPIO_MODE_IN		0	//00: Input mode (reset state)
+#define GPIO_MODE_OUT_10M	1	//01: Output mode, max speed 10 MHz.
+#define GPIO_MODE_OUT_2M	2	//10: Output mode, max speed 2 MHz.
+#define GPIO_MODE_OUT_50M	3	//11: Output mode, max speed 50 MHz
+
+//Type
+//In input mode (MODE[1:0]=00):
+#define GPIO_MODE_ANALOG	0	//00: Analog mode
+#define GPIO_IN_FLOATING	1	//01: Floating input (reset state)
+#define GPIO_IN_PU_PD		2	//10: Input with pull-up / pull-down
+								//11: Reserved
+//In output mode (MODE[1:0] >00):
+#define GPIO_MODE_OUTPUT_PP		0	//00: General purpose output push-pull
+#define GPIO_MODE_OUTPUT_OD 	1	//01: General purpose output Open-drain
+#define GPIO_MODE_AF_PP			2	//10: Alternate function output Push-pull
+#define GPIO_MODE_AF_OD			3	//11: Alternate function output Open-drain
+
+/** @defgroup GPIO_pull_define GPIO pull define
+  * @brief GPIO Pull-Up or Pull-Down Activation
   * @{
   */
-#define  GPIO_MODE_INPUT                        0x00000000u   /*!< Input Floating Mode                   */
-#define  GPIO_MODE_OUTPUT_PP                    0x00000001u   /*!< Output Push Pull Mode                 */
-#define  GPIO_MODE_OUTPUT_OD                    0x00000011u   /*!< Output Open Drain Mode                */
-#define  GPIO_MODE_AF_PP                        0x00000002u   /*!< Alternate Function Push Pull Mode     */
-#define  GPIO_MODE_AF_OD                        0x00000012u   /*!< Alternate Function Open Drain Mode    */
-#define  GPIO_MODE_AF_INPUT                     GPIO_MODE_INPUT          /*!< Alternate Function Input Mode         */
+#define  GPIO_NOPULL        0x00000000u   /*!< No Pull-up or Pull-down activation  */
+#define  GPIO_PULLUP        0x00000001u   /*!< Pull-up activation                  */
+#define  GPIO_PULLDOWN      0x00000002u   /*!< Pull-down activation                */
 
-#define  GPIO_MODE_ANALOG                       0x00000003u   /*!< Analog Mode  */
-
-#define  GPIO_MODE_IT_RISING                    0x10110000u   /*!< External Interrupt Mode with Rising edge trigger detection          */
-#define  GPIO_MODE_IT_FALLING                   0x10210000u   /*!< External Interrupt Mode with Falling edge trigger detection         */
-#define  GPIO_MODE_IT_RISING_FALLING            0x10310000u   /*!< External Interrupt Mode with Rising/Falling edge trigger detection  */
-
-#define  GPIO_MODE_EVT_RISING                   0x10120000u   /*!< External Event Mode with Rising edge trigger detection               */
-#define  GPIO_MODE_EVT_FALLING                  0x10220000u   /*!< External Event Mode with Falling edge trigger detection              */
-#define  GPIO_MODE_EVT_RISING_FALLING           0x10320000u   /*!< External Event Mode with Rising/Falling edge trigger detection       */
-/** @defgroup GPIO_speed_define  GPIO speed define
-  * @brief GPIO Output Maximum frequency
-  * @{
-  */
-#define  GPIO_SPEED_FREQ_LOW              (GPIO_CRL_MODE0_1) /*!< Low speed */
-#define  GPIO_SPEED_FREQ_MEDIUM           (GPIO_CRL_MODE0_0) /*!< Medium speed */
-#define  GPIO_SPEED_FREQ_HIGH             (GPIO_CRL_MODE0)   /*!< High speed */
+////type
+//#define GPIO_OP_TYPE_PP 	0 //PUSH_PULL
+//#define GPIO_OP_TYPE_OD 	1 //OPEN DRAIN
+//
+////speed
+//#define GPIO_SPEED_LOW		0
+//#define GPIO_SPEED_MEDIUM	1
+//#define GPIO_SPEED_FAST		2
+//#define GPIO_SPEED_HIGH		3
+//
+//#define GPIO_NO_PUPD		0
+//#define GPIO_PIN_PU			1
+//#define GPIO_PIN_PD			2
 
 void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi);
 void GPIO_Init(GPIO_Handle_t *pGPIOHandle);
