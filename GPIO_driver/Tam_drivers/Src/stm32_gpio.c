@@ -43,17 +43,17 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 			pGPIOHandle -> pGPIOx -> CRL &= ~(0xF << (4* pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber)); //clear bit
 			temp = (pGPIOHandle->GPIO_pinConfig.GPIO_PinMode << (4* pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber));
 			//2. Config output type or input type
-			temp |= (pGPIOHandle->GPIO_pinConfig.GPIO_PinType << ((4* pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber)+2));
+			temp |= (pGPIOHandle->GPIO_pinConfig.GPIO_PinType << (4* pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber+2));
 			pGPIOHandle -> pGPIOx -> CRL |= temp;
 		}
 		else{ //pin 8 - 15 CRH
 			//1. Config mode and speed
 			pGPIOHandle -> pGPIOx -> CRH &= ~(0xF << (4* (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber - 8))); //clear bit
-			temp = (pGPIOHandle->GPIO_pinConfig.GPIO_PinMode << (4* pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber- 8));
+			temp = (pGPIOHandle->GPIO_pinConfig.GPIO_PinMode << (4* (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber- 8)));
 			//2. Config output type or input type
-			temp |= (pGPIOHandle->GPIO_pinConfig.GPIO_PinType << ((4* pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber - 8)+2));
-			//pGPIOHandle -> pGPIOx -> CRH |= temp;
-			pGPIOHandle -> pGPIOx -> CRH |= 0x00200000UL;
+			temp |= (pGPIOHandle->GPIO_pinConfig.GPIO_PinType << (4* (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber - 8)+2));
+			pGPIOHandle -> pGPIOx -> CRH |= temp;
+			//pGPIOHandle -> pGPIOx -> CRH |= 0x00200000UL;
 		}
 
 	//4. Config PUPD setting
