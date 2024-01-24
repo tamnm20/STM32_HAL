@@ -1,7 +1,8 @@
 ../Tam_drivers/Src/stm32_gpio.c:11:6:GPIO_PeriClockControl	7
-../Tam_drivers/Src/stm32_gpio.c:36:6:GPIO_Init	4
-../Tam_drivers/Src/stm32_gpio.c:83:9:GPIO_ReadPin	1
-../Tam_drivers/Src/stm32_gpio.c:88:10:GPIO_ReadPort	1
-../Tam_drivers/Src/stm32_gpio.c:94:6:GPIO_WritePin	2
-../Tam_drivers/Src/stm32_gpio.c:102:6:GPIO_WritePort	1
-../Tam_drivers/Src/stm32_gpio.c:105:6:GPIO_TogglePin	1
+../Tam_drivers/Src/stm32_gpio.c:35:6:GPIO_Init	12
+../Tam_drivers/Src/stm32_gpio.c:148:6:GPIO_DeInit	3
+../Tam_drivers/Src/stm32_gpio.c:182:9:GPIO_ReadPin	1
+../Tam_drivers/Src/stm32_gpio.c:187:10:GPIO_ReadPort	1
+../Tam_drivers/Src/stm32_gpio.c:193:6:GPIO_WritePin	2
+../Tam_drivers/Src/stm32_gpio.c:201:6:GPIO_WritePort	1
+../Tam_drivers/Src/stm32_gpio.c:204:6:GPIO_TogglePin	1

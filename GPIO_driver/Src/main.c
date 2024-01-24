@@ -28,13 +28,14 @@ int main(void)
 {
 	GPIO_Handle_t GpioLedC13;
 	GpioLedC13.pGPIOx = GPIOC;
-	GpioLedC13.GPIO_pinConfig.GPIO_PinNumber = GPIO_PIN_13;
-	GpioLedC13.GPIO_pinConfig.GPIO_PinMode = GPIO_MODE_OUTPUT_PP;
-	GpioLedC13.GPIO_pinConfig.GPIO_PinType = GPIO_MODE_OUT_50M;
-	GpioLedC13.GPIO_pinConfig.GPIO_Pull = GPIO_PULLUP;
+	GpioLedC13.GPIO_pinConfig.GPIO_PinNumber = GPIO_PIN_13 | GPIO_PIN_12;
+	GpioLedC13.GPIO_pinConfig.GPIO_PinMode = GPIO_MODE_OUT_50M;
+	GpioLedC13.GPIO_pinConfig.GPIO_PinType = GPIO_MODE_OUTPUT_PP;
+	GpioLedC13.GPIO_pinConfig.GPIO_Pull = GPIO_NOPULL;
     /* Loop forever */
 
 	GPIO_Init(&GpioLedC13);
+	GPIO_WritePin(GPIOC, GPIO_PIN_13, 0);
 	while(1){
 		GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 		delay();

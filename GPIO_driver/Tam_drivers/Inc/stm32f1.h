@@ -61,6 +61,15 @@ typedef struct
 
 typedef struct
 {
+  __vo uint32_t EVCR;
+  __vo uint32_t MAPR;
+  __vo uint32_t EXTICR[4];
+  uint32_t RESERVED0;
+  __vo uint32_t MAPR2;
+} AFIO_RegDef_t;
+
+typedef struct
+{
 	__vo uint32_t CR;
 	__vo uint32_t CFGR;
 	__vo uint32_t CIR;
@@ -179,6 +188,15 @@ typedef struct
 #define GPIO_PIN_RESET RESET
 #define FLAG_RESET RESET
 #define FLAG_SET SET
+
+#define SET_BIT(REG, BIT)     ((REG) |= (BIT))
+#define CLEAR_BIT(REG, BIT)   ((REG) &= ~(BIT))
+#define READ_BIT(REG, BIT)    ((REG) & (BIT))
+#define CLEAR_REG(REG)        ((REG) = (0x0))
+#define WRITE_REG(REG, VAL)   ((REG) = (VAL))
+#define READ_REG(REG)         ((REG))
+#define MODIFY_REG(REG, CLEARMASK, SETMASK)  WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
+#define POSITION_VAL(VAL)     (__CLZ(__RBIT(VAL)))
 
 
 #endif /* INC_STM32F1_H_ */

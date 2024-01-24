@@ -32,54 +32,154 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi)
 	}
 }
 
+void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
+{
+  //enable the peripheral clock
+  GPIO_PeriClockControl(pGPIOHandle ->pGPIOx, ENABLE);
 
-void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
-	//enable the peripheral clock
-	GPIO_PeriClockControl(pGPIOHandle ->pGPIOx, ENABLE);
-	uint32_t temp =0; //temp. register
-
-		if(pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber < 8){ //pin 0 - 7 CRL
-			//1. Config mode and speed
-			pGPIOHandle -> pGPIOx -> CRL &= ~(0xF << (4* pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber)); //clear bit
-			temp = (pGPIOHandle->GPIO_pinConfig.GPIO_PinMode << (4* pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber));
-			//2. Config output type or input type
-			temp |= (pGPIOHandle->GPIO_pinConfig.GPIO_PinType << (4* pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber+2));
-			pGPIOHandle -> pGPIOx -> CRL |= temp;
-		}
-		else{ //pin 8 - 15 CRH
-			//1. Config mode and speed
-			pGPIOHandle -> pGPIOx -> CRH &= ~(0xF << (4* (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber - 8))); //clear bit
-			temp = (pGPIOHandle->GPIO_pinConfig.GPIO_PinMode << (4* (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber- 8)));
-			//2. Config output type or input type
-			temp |= (pGPIOHandle->GPIO_pinConfig.GPIO_PinType << (4* (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber - 8)+2));
-			pGPIOHandle -> pGPIOx -> CRH |= temp;
-			//pGPIOHandle -> pGPIOx -> CRH |= 0x00200000UL;
-		}
-
-	//4. Config PUPD setting
-
-        if (pGPIOHandle-> GPIO_pinConfig.GPIO_Pull == GPIO_NOPULL)
+  uint32_t currentmode = 0x0000UL, currentpin = 0x00, pinpos = 0x00, pos = 0x00;
+  uint32_t tmpreg = 0x00, pinmask = 0x00;
+/*---------------------------- GPIO Mode Configuration -----------------------*/
+  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	//1. Config output type or input type
+  currentmode = (uint32_t)pGPIOHandle->GPIO_pinConfig.GPIO_PinType;
+  if (pGPIOHandle->GPIO_pinConfig.GPIO_PinMode != 0x00)
+  {
+	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	//2. Config mode and speed
+    /* Output mode */
+    currentmode |= pGPIOHandle->GPIO_pinConfig.GPIO_PinMode;
+  }
+/*---------------------------- GPIO CRL Configuration ------------------------*/
+  /* Configure the eight low port pins */
+  if (((uint32_t)pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber & ((uint32_t)0x00FF)) != 0x00)
+  {
+    tmpreg = pGPIOHandle -> pGPIOx -> CRL;
+    while (((pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber) >> pinpos) != 0x00u)
+    {
+      pos = ((uint32_t)0x01) << pinpos;
+      /* Get the port pins position */
+      currentpin = (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber) & pos;
+      if (currentpin == pos)
+      {
+        pos = pinpos << 2;
+        /* Clear the corresponding low control register bits */
+        pinmask = ((uint32_t)0x0F) << pos;
+        tmpreg &= ~pinmask;
+        /* Write the mode configuration in the corresponding bits */
+        tmpreg |= (currentmode << pos);
+        																	//3. Config PUPD setting
+        /* Reset the corresponding ODR bit */
+        if (pGPIOHandle-> GPIO_pinConfig.GPIO_Pull == GPIO_PULLDOWN)
         {
-        	//
+          pGPIOHandle -> pGPIOx->BRR = (((uint32_t)0x01) << pinpos);
         }
-        else if (pGPIOHandle-> GPIO_pinConfig.GPIO_Pull == GPIO_PULLUP)
+        else
         {
           /* Set the corresponding ODR bit */
-        	pGPIOHandle -> pGPIOx ->BSRR |= 1 << (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber);
+          if (pGPIOHandle-> GPIO_pinConfig.GPIO_Pull == GPIO_PULLUP)
+          {
+            pGPIOHandle -> pGPIOx->BSRR = (((uint32_t)0x01) << pinpos);
+          }
         }
-        else /* GPIO_PULLDOWN */
+      }
+	  pinpos++;
+    }
+    pGPIOHandle -> pGPIOx->CRL = tmpreg;
+  }
+/*---------------------------- GPIO CRH Configuration ------------------------*/
+  /* Configure the eight high port pins */
+  if (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber > 0x00FF)
+  {
+    tmpreg = pGPIOHandle -> pGPIOx -> CRH;
+    while (((pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber) >> pinpos) != 0x00u)
+    {
+      pos = (((uint32_t)0x01) << (pinpos + 0x08));
+      /* Get the port pins position */
+      currentpin = ((pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber) & pos);
+      if (currentpin == pos)
+      {
+        pos = pinpos << 2;
+        /* Clear the corresponding high control register bits */
+        pinmask = ((uint32_t)0x0F) << pos;
+        tmpreg &= ~pinmask;
+        /* Write the mode configuration in the corresponding bits */
+        tmpreg |= (currentmode << pos);
+        /* Reset the corresponding ODR bit */
+        if (pGPIOHandle-> GPIO_pinConfig.GPIO_Pull == GPIO_PULLDOWN)
         {
-          /* Reset the corresponding ODR bit */
-          pGPIOHandle -> pGPIOx ->BRR |= 1 << (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber);
+          pGPIOHandle -> pGPIOx->BRR = (((uint32_t)0x01) << (pinpos + 0x08));
         }
-
-	//3. Config Alt Functionality
-//        if(pGPIOHandle->GPIO_pinConfig.GPIO_PinType >1 ){
-//
-//        }
-
+        /* Set the corresponding ODR bit */
+        if (pGPIOHandle-> GPIO_pinConfig.GPIO_Pull == GPIO_PULLUP)
+        {
+          pGPIOHandle -> pGPIOx->BSRR = (((uint32_t)0x01) << (pinpos + 0x08));
+        }
+      }
+	  pinpos++;
+    }
+    pGPIOHandle -> pGPIOx->CRH = tmpreg;
+  }
 }
-void GPIO_DeInit(GPIO_RegDef_t *pGPIOx);
+
+//4. Config Alt Functionality
+///**
+//  * @brief  Selects the GPIO pin used as Event output.
+//  * @param  GPIO_PortSource: selects the GPIO port to be used as source
+//  *   for Event output.
+//  *   This parameter can be GPIO_PortSourceGPIOx where x can be (A..E).
+//  * @param  GPIO_PinSource: specifies the pin for the Event output.
+//  *   This parameter can be GPIO_PinSourcex where x can be (0..15).
+//  * @retval None
+//  */
+//void GPIO_EventOutputConfig(uint8_t GPIO_PortSource, uint8_t GPIO_PinSource)
+//{
+//  uint32_t tmpreg = 0x00;
+//  /* Check the parameters */
+//  assert_param(IS_GPIO_EVENTOUT_PORT_SOURCE(GPIO_PortSource));
+//  assert_param(IS_GPIO_PIN_SOURCE(GPIO_PinSource));
+//
+//  tmpreg = AFIO->EVCR;
+//  /* Clear the PORT[6:4] and PIN[3:0] bits */
+//  tmpreg &= EVCR_PORTPINCONFIG_MASK;
+//  tmpreg |= (uint32_t)GPIO_PortSource << 0x04;
+//  tmpreg |= GPIO_PinSource;
+//  AFIO->EVCR = tmpreg;
+//}
+
+void GPIO_DeInit(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber){
+	  uint32_t position = 0x00u;
+	  uint32_t iocurrent;
+
+	  /* Configure the port pins */
+	  while ((PinNumber >> position) != 0u)
+	  {
+	    /* Get current io position */
+	    iocurrent = (PinNumber) & (1uL << position);
+
+	    if (iocurrent)
+	    {
+	      /*------------------------- GPIO Mode Configuration --------------------*/
+	      /* Check if the current bit belongs to first half or last half of the pin count number
+	       in order to address CRH or CRL register */
+		  if ((PinNumber & ((uint32_t)0x00FF)) != 0x00)
+		  {
+			  tmpreg = pGPIOHandle -> pGPIOx -> CRL;
+			  tmpreg |= (currentmode << pos);
+			  pGPIOHandle -> pGPIOx->CRH = tmpreg;
+		  }
+		  if (PinNumber > 0x00FF)
+		  {
+
+		  }
+	      /* CRL/CRH default value is floating input(0x04) shifted to correct position */
+
+	      /* ODR default value is 0 */
+	      CLEAR_BIT(pGPIOx->ODR, iocurrent);
+	    }
+	    position++;
+	  }
+}
+
+
 uint8_t GPIO_ReadPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
 	uint8_t value;
 	value = (uint8_t) (pGPIOx -> IDR >> PinNumber) & 0x00000001;
@@ -91,19 +191,24 @@ uint16_t GPIO_ReadPort(GPIO_RegDef_t *pGPIOx){
 	return value;
 }
 
-void GPIO_WritePin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t Value){
+void GPIO_WritePin(GPIO_RegDef_t *pGPIOx, uint16_t PinNumber, uint8_t Value){
 	if(Value){
-		pGPIOx ->ODR |= (1 << PinNumber);
+		pGPIOx ->BSRR = PinNumber;
 	}
 	else{
-		pGPIOx ->ODR &= ~(1 << PinNumber);
+		pGPIOx ->BRR = PinNumber;
 	}
 }
 void GPIO_WritePort(GPIO_RegDef_t *pGPIOx, uint16_t Value){
 	pGPIOx ->ODR = Value;
 }
-void GPIO_TogglePin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
-	pGPIOx ->ODR ^= (1 << PinNumber);
+void GPIO_TogglePin(GPIO_RegDef_t *pGPIOx, uint16_t PinNumber){
+	  uint32_t odr;
+	  /* get current Output Data Register value */
+	  odr = pGPIOx ->ODR;
+
+	  /* Set selected pins that were at low level, and reset ones that were high */
+	  pGPIOx ->BSRR = ((odr & PinNumber) << 16U) | (~odr & PinNumber);
 }
 
 void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi);
