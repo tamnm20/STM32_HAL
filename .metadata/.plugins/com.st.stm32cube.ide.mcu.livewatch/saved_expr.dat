@@ -5,5 +5,3 @@ TxData
 RxData
 RxHeader.StdId
 TxHeader.StdId
-temp
-currentmode

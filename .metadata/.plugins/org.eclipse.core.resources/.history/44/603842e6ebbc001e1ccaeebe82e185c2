@@ -87,10 +87,8 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
   }
 /*---------------------------- GPIO CRH Configuration ------------------------*/
   /* Configure the eight high port pins */
-
   if (pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber > 0x00FF)
   {
-	pinpos = 0;
     tmpreg = pGPIOHandle -> pGPIOx -> CRH;
     while (((pGPIOHandle-> GPIO_pinConfig.GPIO_PinNumber) >> pinpos) != 0x00u)
     {
@@ -164,10 +162,8 @@ void GPIO_DeInit(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber){
 	  {
 		pos = pinpos << 2;
 		/* Clear the corresponding low control register bits */
-		pinmask = ((uint32_t)0x0F) << pos;
+		pinmask = ((uint32_t)0x04) << pos;
 		tmpreg &= ~pinmask;
-		/* Write Reset value 0x4 */
-		tmpreg |= ((uint32_t)0x4) << pos;
 		/* ODR default value is 0 */
 		CLEAR_BIT(pGPIOx->ODR, currentpin);
 	  }
@@ -180,7 +176,6 @@ void GPIO_DeInit(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber){
   if (PinNumber > 0x00FF)
   {
 	tmpreg = pGPIOx -> CRH;
-	pinpos = 0x00;
 	while ((PinNumber >> pinpos) != 0x00u)
 	{
 	  pos = (((uint32_t)0x01) << (pinpos + 0x08));
@@ -192,8 +187,8 @@ void GPIO_DeInit(GPIO_RegDef_t *pGPIOx, uint32_t PinNumber){
 		/* Clear the corresponding high control register bits */
 		pinmask = ((uint32_t)0x0F) << pos;
 		tmpreg &= ~pinmask;
-		/* Write Reset value 0x4 */
-		tmpreg |= ((uint32_t)0x4) << pos;
+
+		tepreg |= ((uint32_t)0x40) << pos;
 		/* ODR default value is 0 */
 		CLEAR_BIT(pGPIOx->ODR, currentpin);
 	  }
