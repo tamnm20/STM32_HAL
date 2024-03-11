@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;LCD_I2C/Core/Inc/UartRingbuffer.h&apos;" deleteContents="false" description="Delete resource &apos;LCD_I2C/Core/Inc/UartRingbuffer.h&apos;" element1="/LCD_I2C/Core/Inc/UartRingbuffer.h" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1701231280196"/>&#x0A;<refactoring comment="Delete resource &apos;LCD_I2C/Core/Src/UartRingbuffer.c&apos;" deleteContents="false" description="Delete resource &apos;LCD_I2C/Core/Src/UartRingbuffer.c&apos;" element1="/LCD_I2C/Core/Src/UartRingbuffer.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1701231285597"/>
-</session>
