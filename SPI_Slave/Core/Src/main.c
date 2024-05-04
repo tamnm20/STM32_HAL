@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,18 +31,20 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define GPIOB_BASE_ARR 0x40010C00
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-extern void initialise_monitor_handles(void);
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-//__attribute__((section(".ver"))) char version[4] = {1,2,3,4};
+uint8_t recv = 0;
+uint8_t data = 0;
+uint8_t temp =0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -54,50 +56,54 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void leds_init()
+
+void spi_init_slave()
 {
-	//set PB12 in output push-pull
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-	uint32_t * GPIOB_CRH = (uint32_t *) (GPIOB_BASE_ARR + 0x04);
-	*GPIOB_CRH |= (0b11 << 16);// set PB12 in OUTPUT mode speed 50MHz
+	RCC->APB2ENR |=  (1<<2);  // Enable GPIOA clock
 
-	*GPIOB_CRH &= ~(0b11 << 18); //set PB12 output push-pull
+	GPIOA->CRL = 0;
+	GPIOA->CRL |= (1<<22);   // PA5 (SCK) Input floating
+	GPIOA->CRL |= (1<<28);   // PA7 (MOSI) Input floating
+	GPIOA->CRL |= (11U<<24);    // PA6 (MISO) AF Push Pull
+	//GPIOA->CRL |= (3<<16);    // PA4 used for CS, GPIO Output
+	GPIOA->CRL |= (1<<18);
 
-	//set PC13 in output push-pull
-	__HAL_RCC_GPIOC_CLK_ENABLE();
+	//init spi1 in master
 
-	GPIOC->CRH &= ~(0xF<<20);  // Clear Bits 23:22:21:20
-	GPIOC->CRH |= (1<<20);  // PC13 Output mode 10 MHz, push pull
+	__HAL_RCC_SPI1_CLK_ENABLE(); //enable 8Mhz clock spi
+	SPI1->CR1 |= (1<<0)|(1<<1);   // CPOL=1, CPHA=1
+	SPI1 ->CR1 &= ~(1<<2);		//slave mode
+	SPI1->CR1 |= (3<<3);  // BR[2:0] = 011: fPCLK/16, PCLK2 = 8MHz, SPI clk = 500kHz
+	SPI1->CR1 &= ~(1<<9);  // SSM=0
+
+	SPI1->CR1 &= ~(1<<11);  // DFF=0, 8 bit data
+
+	SPI1->CR1 &= ~(1<<7);  // MSB first
+	//SPI1->CR1 |= (1<<7);  // LSB first
+	SPI1->CR1 &= ~(1<<10);  // full-duplex
+	SPI1->CR1 |= (1<<6); //enable SPI
+
+	//GPIOA -> ODR |= (1<<4);
 }
 
-void led_control(char led_state)
+char spi_read_data(char reg)
 {
-	uint32_t * GPIOB_ODR = (uint32_t *) (GPIOB_BASE_ARR + 0x0C);
-	if(led_state == 0)
-	{
-		*GPIOB_ODR |= (1<<12);
-	}
-	else
-	{
-		*GPIOB_ODR &= ~(1<<12);
-	}
+//	while(((SPI1 -> SR >>1)&1) != 1); //wait Tx empty to write data DR
+//   SPI1 -> DR = reg;
+   //while(((SPI1 -> SR >>1)&1) == 1); //wait data be transfered to Tx buffer
+   while(((SPI1 -> SR >>0)&1) != 1); //wait RXNE not empty (has recv data) to read data
+   while(((SPI1 -> SR>>7)&1) == 1); //wait not busy
+//	while (((SPI1->SR)&(1<<7))) {};  // wait for BSY bit to Reset -> This will indicate that SPI is not busy in communication
+//			SPI1->DR = 0;  // send dummy data
+//			while (!((SPI1->SR) &(1<<0))){};
+   //read data from DR
+   temp = SPI1 -> DR;
+   //if(temp){
+	   	while(((SPI1 -> SR >>1)&1) != 1); //wait Tx empty to write data DR
+	      SPI1 -> DR = reg;
+   //}
+   return temp;
 }
-
-void led_toggle(){
-	uint32_t * GPIOB_ODR = (uint32_t *) (GPIOB_BASE_ARR + 0x0C);
-
-	if(((* GPIOB_ODR >> 12)&1)==0)
-	{
-
-		*GPIOB_ODR |= (1<<12);
-	}
-	else
-	{
-		*GPIOB_ODR &= ~(1<<12);
-	}
-}
-
-char buff[100] = "Hello!";
 /* USER CODE END 0 */
 
 /**
@@ -107,7 +113,7 @@ char buff[100] = "Hello!";
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	initialise_monitor_handles();
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -116,7 +122,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+	//initialise_monitor_handles();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -129,9 +135,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  leds_init();
-  printf("Hello, World!\n");
-
+  spi_init_slave();
+  //spi_init_slave();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -141,16 +146,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  printf("Enter string:\n");
-	  //fgets(buff, sizeof(buff), stdin);
-	  printf(buff);
-	  printf("\n");
-	  led_toggle();
-	  HAL_Delay(100);
-//	GPIOC->BSRR |= (1<<13);  // Set the pin PC13
-//	HAL_Delay(100);
-//	GPIOC->BSRR |= (1<<29);  // RESET the pin PC13
-//	HAL_Delay(100);
+	  recv = spi_read_data(0x77);
   }
   /* USER CODE END 3 */
 }
