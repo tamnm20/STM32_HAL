@@ -1,0 +1,2 @@
+../MyLib/Src/adc.c:10:6:read_temp_init	4	static
+../MyLib/Src/adc.c:26:7:adc_get_temp_ss	24	static

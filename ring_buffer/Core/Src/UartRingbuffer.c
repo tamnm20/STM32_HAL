@@ -162,7 +162,7 @@ void Uart_isr (UART_HandleTypeDef *huart)
     	    	      * @note   TXE flag is cleared only by a write to the USART_DR register.
 
     	 *********************/
-		huart->Instance->SR;                       /* Read status register */
+		//huart->Instance->SR;                       /* Read status register */
         unsigned char c = huart->Instance->DR;     /* Read data register */
         store_char (c, _rx_buffer);  // store data in buffer
         return;
@@ -175,7 +175,6 @@ void Uart_isr (UART_HandleTypeDef *huart)
     	    {
     	      // Buffer empty, so disable interrupts
     	      __HAL_UART_DISABLE_IT(huart, UART_IT_TXE);
-
     	    }
 
     	 else
@@ -196,7 +195,7 @@ void Uart_isr (UART_HandleTypeDef *huart)
 
     	      *********************/
 
-    	      huart->Instance->SR;
+    	      //huart->Instance->SR;
     	      huart->Instance->DR = c;
 
     	    }

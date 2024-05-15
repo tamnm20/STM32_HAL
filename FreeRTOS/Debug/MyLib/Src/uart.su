@@ -1,0 +1,4 @@
+../MyLib/Src/uart.c:10:6:UART1_init	32	static
+../MyLib/Src/uart.c:40:13:UART1_Send_1byte	24	static
+../MyLib/Src/uart.c:50:13:UART1_Send_String	24	static
+../MyLib/Src/uart.c:59:6:uart_printf	144	static

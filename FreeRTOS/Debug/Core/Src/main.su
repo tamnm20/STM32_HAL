@@ -1,0 +1,10 @@
+../Core/Src/main.c:39:6:leds_init	16	static
+../Core/Src/main.c:49:6:led_toggle	16	static
+../Core/Src/main.c:133:5:main	8	static
+../Core/Src/main.c:228:6:SystemClock_Config	72	static
+../Core/Src/main.c:268:13:MX_GPIO_Init	16	static
+../Core/Src/main.c:292:6:func1	16	static
+../Core/Src/main.c:313:6:func2	16	static
+../Core/Src/main.c:333:6:func3	32	static
+../Core/Src/main.c:361:6:func4	24	static
+../Core/Src/main.c:380:6:Error_Handler	4	static,ignoring_inline_asm
