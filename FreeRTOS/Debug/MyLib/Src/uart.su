@@ -1,4 +1,7 @@
-../MyLib/Src/uart.c:10:6:UART1_init	32	static
-../MyLib/Src/uart.c:40:13:UART1_Send_1byte	24	static
-../MyLib/Src/uart.c:50:13:UART1_Send_String	24	static
-../MyLib/Src/uart.c:59:6:uart_printf	144	static
+../MyLib/Src/uart.c:12:6:UART1_init	24	static
+../MyLib/Src/uart.c:54:6:UART2_init	4	static
+../MyLib/Src/uart.c:104:6:UART1_Send_1byte	24	static
+../MyLib/Src/uart.c:114:13:UART1_Send_String	24	static
+../MyLib/Src/uart.c:123:6:uart_printf	144	static
+../MyLib/Src/uart.c:133:6:USART1_IRQHandler	4	static
+../MyLib/Src/uart.c:151:6:USART2_IRQHandler	4	static
