@@ -1,7 +1,8 @@
 ../Core/Src/i2c-lcd.c:103:6:lcd_send_cmd	32	static
-../Core/Src/i2c-lcd.c:116:6:lcd_send_data	32	static
-../Core/Src/i2c-lcd.c:129:6:lcd_init	8	static
-../Core/Src/i2c-lcd.c:147:6:lcd_send_string	16	static
-../Core/Src/i2c-lcd.c:152:6:lcd_clear_display	8	static
-../Core/Src/i2c-lcd.c:157:6:lcd_goto_XY	24	static
-../Core/Src/i2c-lcd.c:178:6:lcd_createChar	24	static
+../Core/Src/i2c-lcd.c:117:6:lcd_send_data	32	static
+../Core/Src/i2c-lcd.c:131:6:lcd_init	8	static
+../Core/Src/i2c-lcd.c:149:6:lcd_send_string	16	static
+../Core/Src/i2c-lcd.c:154:6:lcd_clear_display	8	static
+../Core/Src/i2c-lcd.c:160:6:lcd_goto_XY	24	static
+../Core/Src/i2c-lcd.c:181:6:lcd_createChar	24	static
+../Core/Src/i2c-lcd.c:189:6:LCD_ShiftDisplay	24	static

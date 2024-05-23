@@ -95,8 +95,8 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   //HAL_I2C_EnableListen_IT(&hi2c1);
-  HAL_Delay(1000);
   lcd_init();
+  lcd_clear_display();
   lcd_goto_XY(1, 0);
   lcd_send_string("Toi Tuan Cui xin the");
   HAL_Delay(50);
@@ -108,9 +108,9 @@ int main(void)
   HAL_Delay(50);
   lcd_goto_XY(4, 0);
   lcd_send_string("  San sang di NVQS  ");
-  HAL_Delay(200);
-  lcd_clear_display();
-  lcd_goto_XY(1, 0);
+  HAL_Delay(500);
+//  lcd_clear_display();
+//  lcd_goto_XY(1, 0);
 
 //  lcd_createChar(0, armsDown);
 //  // create a new character
@@ -145,9 +145,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	lcd_goto_XY(1, 0);
-	lcd_send_string("123456789");
-	//HAL_I2C_Master_Transmit (&hi2c1, 0x40,(uint8_t *) test, 4, 100);
+//	lcd_goto_XY(1, 0);
+//	lcd_send_string("123456789");
+	HAL_I2C_Master_Transmit (&hi2c1, 0x4E,(uint8_t *) test, 4, 100);
 	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 	HAL_Delay(100);
   }

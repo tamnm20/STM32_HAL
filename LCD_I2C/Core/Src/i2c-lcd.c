@@ -111,6 +111,7 @@ void lcd_send_cmd (char cmd)
 	data_t[2] = data_l|0x0C;  //en=1, rs=0
 	data_t[3] = data_l|0x08;  //en=0, rs=0
 	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
+	HAL_Delay(1);
 }
 
 void lcd_send_data (char data)
@@ -124,6 +125,7 @@ void lcd_send_data (char data)
 	data_t[2] = data_l|0x0D;  //en=1, rs=0
 	data_t[3] = data_l|0x09;  //en=0, rs=0
 	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
+	HAL_Delay(1);
 }
 
 void lcd_init (void)
@@ -152,6 +154,7 @@ void lcd_send_string (char *str)
 void lcd_clear_display (void)
 {
 	lcd_send_cmd (0x01); //clear display
+	HAL_Delay(4);
 }
 
 void lcd_goto_XY (int row, int col)
@@ -181,4 +184,11 @@ void lcd_createChar(uint8_t location, uint8_t charmap[]) {
   for (int i=0; i<8; i++) {
 	  lcd_send_data(charmap[i]);
   }
+}
+
+void LCD_ShiftDisplay(LCD_ShiftTypeDef shift_direc, uint8_t num) {
+	for(uint8_t i = 0; i < num; i++) {
+		lcd_send_cmd((0x18u | (uint8_t)(shift_direc << 0x02u)));
+		HAL_Delay(1);
+	}
 }
