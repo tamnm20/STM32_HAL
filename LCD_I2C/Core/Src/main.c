@@ -108,36 +108,37 @@ int main(void)
   HAL_Delay(50);
   lcd_goto_XY(4, 0);
   lcd_send_string("  San sang di NVQS  ");
-  HAL_Delay(500);
-//  lcd_clear_display();
-//  lcd_goto_XY(1, 0);
+  HAL_Delay(2000);
 
-//  lcd_createChar(0, armsDown);
-//  // create a new character
-//  lcd_createChar(1, smiley);
-//  // create a new character
-//  lcd_createChar(2, frownie);
-//  // create a new character
-//  lcd_createChar(3, heart);
-//  // create a new character
-//  lcd_createChar(4, armsUp);
-//  lcd_createChar(5, Tuan);
+  lcd_clear_display();
+  lcd_goto_XY(1, 0);
+
+  lcd_createChar(0, armsDown);
+  // create a new character
+  lcd_createChar(1, smiley);
+  // create a new character
+  lcd_createChar(2, frownie);
+  // create a new character
+  lcd_createChar(3, heart);
+  // create a new character
+  lcd_createChar(4, armsUp);
+  lcd_createChar(5, Tuan);
 
   // set the cursor to the top left
   //lcd_goto_XY(1, 0);
 
   // Print a message to the lcd.
-//  lcd_send_string("I ");
-//  lcd_send_data('a');
-//  lcd_send_string(" Arduino! ");
-//  lcd_send_data(0x01);
-//
-//  lcd_goto_XY(2, 4);
-//  lcd_send_string("Tu");
-//  lcd_send_data(0x05);
-//  lcd_send_string("n");
-  /* USER CODE END 2 */
+  lcd_send_string("I ");
+  lcd_send_data('a');
+  lcd_send_string(" Arduino! ");
+  lcd_send_data(0x01);
 
+  lcd_goto_XY(2, 4);
+  lcd_send_string("Tu");
+  lcd_send_data(0x05);
+  lcd_send_string("n");
+  /* USER CODE END 2 */
+  HAL_Delay(2000);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -147,9 +148,9 @@ int main(void)
     /* USER CODE BEGIN 3 */
 //	lcd_goto_XY(1, 0);
 //	lcd_send_string("123456789");
-	HAL_I2C_Master_Transmit (&hi2c1, 0x4E,(uint8_t *) test, 4, 100);
-	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-	HAL_Delay(100);
+//	HAL_I2C_Master_Transmit (&hi2c1, 0x4E,(uint8_t *) test, 4, 100);
+//	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+//	HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
