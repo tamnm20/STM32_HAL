@@ -22,7 +22,7 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-
+#include "Ringbuffer.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,6 +94,7 @@ uint8_t UserRxBufferFS[APP_RX_DATA_SIZE];
 uint8_t UserTxBufferFS[APP_TX_DATA_SIZE];
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */
+extern RingBuffer_t USB_RxBuffer;
 uint32_t time;
 char ReceivedData[100] = {0};
 uint8_t Rxcount = 0;
@@ -268,20 +269,22 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 //  return (USBD_OK);
 //  /* USER CODE END 6 */
   /* USER CODE BEGIN 6 */
-	dataSize = *Len;
-	if(HAL_GetTick() - time > 10)
-	{
-		Rxcount = 0;
-		for(int i = 0; i < dataSize; i++)
-		{
-			ReceivedData[Rxcount++] = Buf[i];
-		}
-	}
-		USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
-		USBD_CDC_ReceivePacket(&hUsbDeviceFS);
-	check = 1; //nhan biet co du lieu den
-	time = HAL_GetTick();
-  return (USBD_OK);
+//	dataSize = *Len;
+//	if(HAL_GetTick() - time > 10)
+//	{
+//		Rxcount = 0;
+//		for(int i = 0; i < dataSize; i++)
+//		{
+//			ReceivedData[Rxcount++] = Buf[i];
+//		}
+//	}
+//		USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
+//		USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+//	check = 1; //nhan biet co du lieu den
+//	time = HAL_GetTick();
+//  return (USBD_OK);
+    RingBuffer_Write(&USB_RxBuffer, Buf, *Len);
+    return USBD_OK;
   /* USER CODE END 6 */
 }
 
