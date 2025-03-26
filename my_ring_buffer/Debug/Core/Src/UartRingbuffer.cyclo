@@ -1,7 +1,0 @@
-../Core/Src/UartRingbuffer.c:32:6:Ringbuf_init	1
-../Core/Src/UartRingbuffer.c:41:6:Uart_read	2
-../Core/Src/UartRingbuffer.c:53:6:Uart_write	2
-../Core/Src/UartRingbuffer.c:63:5:IsDataAvailable	2
-../Core/Src/UartRingbuffer.c:73:9:IsFull	1
-../Core/Src/UartRingbuffer.c:79:9:IsEmpty	1
-../Core/Src/UartRingbuffer.c:85:6:Uart_sendstring	2
